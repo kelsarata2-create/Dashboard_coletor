@@ -1,16 +1,10 @@
-import glob
-import os
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
 
-procura_arquivo = glob.glob(
-    '../coletor-trafego-aereo-sul/voos_sul_*.json')
 
-arquivo_mais_recente = max(procura_arquivo, key=os.path.getmtime)
-
-tabela = pd.read_json(arquivo_mais_recente)
+tabela = pd.read_json('https://raw.githubusercontent.com/kelsarata2-create/coletor-trafego-aereo-sul/main/voos_sul_atual.json')
 tabela = tabela[tabela['Callsign'] != '']
 tabela = tabela[tabela['Speed(kt)'] != 'Sem dados']
 tabela['Speed(kt)'] = tabela['Speed(kt)'].str.replace('kt', '').astype(int)
